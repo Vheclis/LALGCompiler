@@ -33,18 +33,18 @@ error "gperf generated tables don't work with this execution character set. Plea
 
 	typedef struct Word
 	{
-		char *word;
+		char *name;
 		char *token;
 	} WORD;
 #line 10 "reserved_words.txt"
 struct Word;
 
-#define TOTAL_KEYWORDS 32
+#define TOTAL_KEYWORDS 33
 #define MIN_WORD_LENGTH 1
 #define MAX_WORD_LENGTH 9
 #define MIN_HASH_VALUE 1
-#define MAX_HASH_VALUE 56
-/* maximum key range = 56, duplicates = 0 */
+#define MAX_HASH_VALUE 61
+/* maximum key range = 61, duplicates = 0 */
 
 #ifdef __GNUC__
 __inline
@@ -60,32 +60,32 @@ hash (str, len)
 {
   static const unsigned char asso_values[] =
     {
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      55, 50, 45, 40, 30, 25, 57, 20, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 35, 15,
-      10,  0,  5, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57,  5,  0,  0,
-      30,  0, 10, 25, 10, 15, 57, 57,  0, 57,
-       0,  0,  5, 57,  5,  0,  0, 57,  0,  0,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
-      57, 57, 57, 57, 57, 57
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      60, 55, 50, 45, 40, 30, 25, 20, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 35, 15,
+      10,  0,  5, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62,  5,  0,  0,
+      30,  0, 10, 25, 10, 15, 62, 62,  0, 62,
+       0,  0,  5, 62,  5,  0,  0, 62,  0,  0,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62, 62, 62, 62, 62,
+      62, 62, 62, 62, 62, 62
     };
   register int hval = len;
 
@@ -124,74 +124,77 @@ in_word_set (str, len)
       {""},
 #line 15 "reserved_words.txt"
       {"end", "END_RESERVED"},
-#line 26 "reserved_words.txt"
+#line 27 "reserved_words.txt"
       {"else", "ELSE_RESERVED"},
 #line 16 "reserved_words.txt"
       {"const", "CONST_RESERVED"},
-#line 38 "reserved_words.txt"
+#line 39 "reserved_words.txt"
       {">", "MAJOR_SYMBOL"},
-#line 36 "reserved_words.txt"
+#line 37 "reserved_words.txt"
       {">=", "MAJOR_EQUAL_SYMBOL"},
 #line 18 "reserved_words.txt"
       {"var", "VAR_RESERVED"},
-#line 20 "reserved_words.txt"
+#line 21 "reserved_words.txt"
       {"real", "REAL_RESERVED"},
-#line 28 "reserved_words.txt"
-      {"write", "WRITE_RESERVED"},
-#line 39 "reserved_words.txt"
-      {"<", "MINOR_SYMBOL"},
-#line 37 "reserved_words.txt"
-      {"<=", "MINOR_EQUAL_SYMBOL"},
 #line 29 "reserved_words.txt"
-      {"for", "FOR_RESERVED"},
-#line 33 "reserved_words.txt"
-      {"then", "THEN_RESERVED"},
+      {"write", "WRITE_RESERVED"},
+#line 40 "reserved_words.txt"
+      {"<", "MINOR_SYMBOL"},
+#line 38 "reserved_words.txt"
+      {"<=", "MINOR_EQUAL_SYMBOL"},
 #line 30 "reserved_words.txt"
+      {"for", "FOR_RESERVED"},
+#line 34 "reserved_words.txt"
+      {"then", "THEN_RESERVED"},
+#line 31 "reserved_words.txt"
       {"while", "WHILE_RESERVED"},
 #line 13 "reserved_words.txt"
       {";", "SEMICOLON_SYMBOL"},
-#line 35 "reserved_words.txt"
+#line 36 "reserved_words.txt"
       {"<>", "DIF_SYMBOL"},
       {""},
-#line 23 "reserved_words.txt"
+#line 24 "reserved_words.txt"
       {"procedure", "PROCEDURE_RESERVED"},
 #line 14 "reserved_words.txt"
       {"begin", "BEGIN_RESERVED"},
-#line 43 "reserved_words.txt"
+#line 44 "reserved_words.txt"
       {"/", "DIVISION_SYMBOL"},
-#line 21 "reserved_words.txt"
+#line 22 "reserved_words.txt"
       {"integer", "INTEGER_RESERVED"},
       {""}, {""}, {""},
-#line 41 "reserved_words.txt"
-      {"-", "MINUS_SYMBOL"},
-#line 32 "reserved_words.txt"
+#line 20 "reserved_words.txt"
+      {".", "DOT_SYMBOL"},
+#line 33 "reserved_words.txt"
       {"if", "IF_RESERVED"},
       {""}, {""}, {""},
-#line 22 "reserved_words.txt"
-      {",", "COMMA_SYMBOL"},
-#line 31 "reserved_words.txt"
+#line 42 "reserved_words.txt"
+      {"-", "MINUS_SYMBOL"},
+#line 32 "reserved_words.txt"
       {"do", "DO_RESERVED"},
       {""}, {""}, {""},
 #line 19 "reserved_words.txt"
       {":", "COLON_SYMBOL"},
-#line 34 "reserved_words.txt"
+#line 35 "reserved_words.txt"
       {":=", "ASSIGN_SYMBOL"},
       {""},
-#line 27 "reserved_words.txt"
+#line 28 "reserved_words.txt"
       {"read", "READ_RESERVED"},
       {""},
-#line 40 "reserved_words.txt"
-      {"+", "PLUS_SYMBOL"},
+#line 23 "reserved_words.txt"
+      {",", "COMMA_SYMBOL"},
 #line 12 "reserved_words.txt"
       {"program", "PROGRAM_RESERVED"},
       {""}, {""}, {""},
-#line 42 "reserved_words.txt"
+#line 41 "reserved_words.txt"
+      {"+", "PLUS_SYMBOL"},
+      {""}, {""}, {""}, {""},
+#line 43 "reserved_words.txt"
       {"*", "MULTIPLICATION_SYMBOL"},
       {""}, {""}, {""}, {""},
-#line 25 "reserved_words.txt"
+#line 26 "reserved_words.txt"
       {")", "RIGHT_PARENTHESIS"},
       {""}, {""}, {""}, {""},
-#line 24 "reserved_words.txt"
+#line 25 "reserved_words.txt"
       {"(", "LEFT_PARENTHESIS"}
     };
 

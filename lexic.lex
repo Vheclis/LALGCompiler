@@ -18,24 +18,22 @@
 		ARG_SIZE
 	};
 
-	char* special_names[]
+	char* special_names[] =
 	{
 		"IDENTIFIER",
 		"INTEGER_NUMBER",
 		"REAL_NUMBER"
 	};
 
-	int line_number = 1;
-
-	void print_specific(char *, char *);
-	void print_symbol(char *);
-	void print_lexical(char *);
+	void print_specific(char* str, char* token);
+	void print_symbol(char* str);
+	void print_lexical(char* str);
 	void error(char *);
 
 	FILE* yyin;
 
 %}
-
+%option noyywrap
 %% //Rules
 
 \{.*\}														{ /* Commentary LALG */ }
@@ -45,12 +43,12 @@
 [0-9]+														{ print_specific(yytext, special_names[INTEGER]); } /* Integer Number */
 [0-9]+\.[0-9]+										{ print_specific(yytext, special_names[REAL]); } /* Real Number */
 
-[:=><]{2}													{ print_symbol(yytex); } /* Operators and Comparer */
-[+\-\*\/\(\)\[\]\.,;:=><]					{ print_symbol(yytex); } /* Operators and Comparer */
+[:=><]{2}													{ print_symbol(yytext); } /* Operators and Comparer */
+[+\-\*\/\(\)\[\]\.,;:=><]					{ print_symbol(yytext); } /* Operators and Comparer */
 
-[a-zA-Z][a-zA-Z0-9_]*							{ print_lexical(yytex); } /* Identifiers and Reserved Words */
+[a-zA-Z][a-zA-Z0-9_]*							{ print_lexical(yytext); } /* Identifiers and Reserved Words */
 
-.																	{ error(yytex); } /* Error */
+.																	{ error(yytext); } /* Error */
 
 %%
 
@@ -70,7 +68,7 @@ void print_symbol(char* str)
 	const WORD* hash_word = in_word_set(str, strlen(str));
 
 	if(hash_word) // Print if in hash-table
-		printf("%s - %s\n", hash_word->word, hash_word->token);
+		printf("%s - %s\n", hash_word->name, hash_word->token);
 	else if (strlen(str) == 2) // If we have double character
 	{
 		// Try match the first character symbol
@@ -93,7 +91,7 @@ void print_lexical(char* str)
 	const WORD* hash_word = in_word_set(str, strlen(str));
 
 	if(hash_word) // Print if in hash-table
-		printf("%s - %s\n", hash_word->word, hash_word->token);
+		printf("%s - %s\n", hash_word->name, hash_word->token);
 	else // Print identifier otherwise
 		print_specific(str, special_names[IDENTIFIER]);
 }

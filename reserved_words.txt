@@ -1,7 +1,7 @@
 %{
 	typedef struct Word
 	{
-		char *word;
+		char *name;
 		char *token;
 	} WORD;
 %}
@@ -17,6 +17,7 @@ struct Word
 "=", "EQUAL_SYMBOL"
 "var", "VAR_RESERVED"
 ":", "COLON_SYMBOL"
+".", "DOT_SYMBOL"
 "real", "REAL_RESERVED"
 "integer", "INTEGER_RESERVED"
 ",", "COMMA_SYMBOL"
