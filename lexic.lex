@@ -1,6 +1,7 @@
 %{
 	#include <stdio.h>
 	#include <stdlib.h>
+	#include "reserved_words.h"
 
 	enum special_tokens
 	{
@@ -11,28 +12,48 @@
 
 	char * special_names[]
 	{
-		"IDENTIFIER_RESERVED",
-		"INTEGER_RESERVED",
-		"REAL_RESERVED"
+		"IDENTIFIER",
+		"INTEGER_NUMBER",
+		"REAL_NUMBER"
 	}
 
-	int column_counter = 1;
-	int line_counter = 1;
-	
+	int line_number = 1;
+
+	void printSpecial(char *, char *);
+	void printSpecial(char *);
+	void error();
+
 %}
 
 %% //Rules
 
-[0-9]+						{ column_counter += strlen(yytext); printReservedWord(yytext, special_names[INTEGER]) }
-[0-9]+\.[0-9]+				{ column_counter += strlen(yytext); printReservedWord(yytext, special_names[REAL]) }
-[ \t\r]						{ column_counter++; }
-\n 							{ column_counter = 0; line_counter++ }
-\{.*\}						{ column_counter += strlen(yytext); }
+\{.*\}														{ /* Commentary LALG */ }
+[ \t\r]														{ /* Line Spacing */ }
+\n 																{ /* Line Break */ }
+
+[0-9]+														{ printSpecial(yytext, special_names[INTEGER]) } /* Integer Number */
+[0-9]+\.[0-9]+										{ printSpecial(yytext, special_names[REAL]) } /* Real Number */
+
+[:=><]{2}													{ printSymbol(yytex); } /* Operators and Comparer */
+[+\-\*\/\(\)\[\]\.,;:=><]					{ printSymbol(yytex); } /* Operators and Comparer */
+
+[a-zA-Z][a-zA-Z0-9_]*							{ printLexical(yytex); } /* Identifiers and Reserved Words */
+
+.																	{ error(); } /* Error */
 
 %%
 
-void printReservedWord(char *inputText, char *special_token)
+void printSpecial(char *str, char *token)
 {
-	printf("< %s - %s >\n",inputText, special_token );
-	return ;
+	printf("%s - %s\n",text, token );
+	return;
+}
+
+void printSpecial(char *str)
+{
+}
+
+void printSymbol(char* str)
+{
+
 }
