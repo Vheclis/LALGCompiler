@@ -1,4 +1,4 @@
-/* ANSI-C code produced by gperf version 3.1 */
+/* C code produced by gperf version 3.0.4 */
 /* Command-line: gperf reserved_words.txt  */
 /* Computed positions: -k'1-2,4' */
 
@@ -26,7 +26,7 @@
       && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
       && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126))
 /* The character set is not based on ISO-646.  */
-#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
+error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
 #endif
 
 #line 1 "reserved_words.txt"
@@ -34,17 +34,17 @@
 	typedef struct Word
 	{
 		char *word;
-		char *symbol;
+		char *token;
 	} WORD;
 #line 10 "reserved_words.txt"
-WORD;
+struct Word;
 
-#define TOTAL_KEYWORDS 31
+#define TOTAL_KEYWORDS 32
 #define MIN_WORD_LENGTH 1
 #define MAX_WORD_LENGTH 9
 #define MIN_HASH_VALUE 1
-#define MAX_HASH_VALUE 42
-/* maximum key range = 42, duplicates = 0 */
+#define MAX_HASH_VALUE 56
+/* maximum key range = 56, duplicates = 0 */
 
 #ifdef __GNUC__
 __inline
@@ -54,38 +54,40 @@ inline
 #endif
 #endif
 static unsigned int
-hash (register const char *str, register size_t len)
+hash (str, len)
+     register const char *str;
+     register unsigned int len;
 {
   static const unsigned char asso_values[] =
     {
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      12, 24,  4,  1, 28, 30, 43, 25, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 20, 15,
-      10,  0,  5, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43,  5,  0,  0,
-      10,  0, 15, 15, 10, 25, 43, 43,  0, 43,
-       0, 15, 10, 43,  5,  0,  0, 43,  0,  0,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43, 43, 43, 43, 43,
-      43, 43, 43, 43, 43, 43
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      55, 50, 45, 40, 30, 25, 57, 20, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 35, 15,
+      10,  0,  5, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57,  5,  0,  0,
+      30,  0, 10, 25, 10, 15, 57, 57,  0, 57,
+       0,  0,  5, 57,  5,  0,  0, 57,  0,  0,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57, 57, 57, 57, 57,
+      57, 57, 57, 57, 57, 57
     };
-  register unsigned int hval = len;
+  register int hval = len;
 
   switch (hval)
     {
@@ -103,25 +105,32 @@ hash (register const char *str, register size_t len)
   return hval;
 }
 
-const WORD *
-in_word_set (register const char *str, register size_t len)
+#ifdef __GNUC__
+__inline
+#if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
+__attribute__ ((__gnu_inline__))
+#endif
+#endif
+const struct Word *
+in_word_set (str, len)
+     register const char *str;
+     register unsigned int len;
 {
-  static const WORD wordlist[] =
+  static const struct Word wordlist[] =
     {
       {""},
 #line 17 "reserved_words.txt"
       {"=", "EQUAL_SYMBOL"},
-#line 39 "reserved_words.txt"
-      {"+", "PLUS_SYMBOL"},
+      {""},
 #line 15 "reserved_words.txt"
       {"end", "END_RESERVED"},
 #line 26 "reserved_words.txt"
       {"else", "ELSE_RESERVED"},
-#line 41 "reserved_words.txt"
-      {"*", "MULTIPLICATION_SYMBOL"},
-#line 37 "reserved_words.txt"
+#line 16 "reserved_words.txt"
+      {"const", "CONST_RESERVED"},
+#line 38 "reserved_words.txt"
       {">", "MAJOR_SYMBOL"},
-#line 35 "reserved_words.txt"
+#line 36 "reserved_words.txt"
       {">=", "MAJOR_EQUAL_SYMBOL"},
 #line 18 "reserved_words.txt"
       {"var", "VAR_RESERVED"},
@@ -129,60 +138,68 @@ in_word_set (register const char *str, register size_t len)
       {"real", "REAL_RESERVED"},
 #line 28 "reserved_words.txt"
       {"write", "WRITE_RESERVED"},
-#line 38 "reserved_words.txt"
+#line 39 "reserved_words.txt"
       {"<", "MINOR_SYMBOL"},
-#line 36 "reserved_words.txt"
+#line 37 "reserved_words.txt"
       {"<=", "MINOR_EQUAL_SYMBOL"},
-#line 24 "reserved_words.txt"
-      {"(", "LEFT_PARENTHESIS"},
-#line 32 "reserved_words.txt"
-      {"then", "THEN_RESERVED"},
 #line 29 "reserved_words.txt"
+      {"for", "FOR_RESERVED"},
+#line 33 "reserved_words.txt"
+      {"then", "THEN_RESERVED"},
+#line 30 "reserved_words.txt"
       {"while", "WHILE_RESERVED"},
 #line 13 "reserved_words.txt"
       {";", "SEMICOLON_SYMBOL"},
-#line 34 "reserved_words.txt"
+#line 35 "reserved_words.txt"
       {"<>", "DIF_SYMBOL"},
-      {""},
-#line 27 "reserved_words.txt"
-      {"read", "READ_RESERVED"},
-#line 16 "reserved_words.txt"
-      {"const", "CONST_RESERVED"},
-#line 19 "reserved_words.txt"
-      {":", "COLON_SYMBOL"},
-#line 33 "reserved_words.txt"
-      {":=", "ASSIGN_SYMBOL"},
       {""},
 #line 23 "reserved_words.txt"
       {"procedure", "PROCEDURE_RESERVED"},
-#line 25 "reserved_words.txt"
-      {")", "RIGHT_PARENTHESIS"},
-#line 42 "reserved_words.txt"
-      {"/", "DIVISION_SYMBOL"},
-#line 30 "reserved_words.txt"
-      {"do", "DO_RESERVED"},
-      {""},
-#line 22 "reserved_words.txt"
-      {",", "COMMA_SYMBOL"},
 #line 14 "reserved_words.txt"
       {"begin", "BEGIN_RESERVED"},
-#line 40 "reserved_words.txt"
-      {"-", "MINUS_SYMBOL"},
+#line 43 "reserved_words.txt"
+      {"/", "DIVISION_SYMBOL"},
 #line 21 "reserved_words.txt"
       {"integer", "INTEGER_RESERVED"},
-      {""}, {""}, {""}, {""},
+      {""}, {""}, {""},
+#line 41 "reserved_words.txt"
+      {"-", "MINUS_SYMBOL"},
+#line 32 "reserved_words.txt"
+      {"if", "IF_RESERVED"},
+      {""}, {""}, {""},
+#line 22 "reserved_words.txt"
+      {",", "COMMA_SYMBOL"},
+#line 31 "reserved_words.txt"
+      {"do", "DO_RESERVED"},
+      {""}, {""}, {""},
+#line 19 "reserved_words.txt"
+      {":", "COLON_SYMBOL"},
+#line 34 "reserved_words.txt"
+      {":=", "ASSIGN_SYMBOL"},
+      {""},
+#line 27 "reserved_words.txt"
+      {"read", "READ_RESERVED"},
+      {""},
+#line 40 "reserved_words.txt"
+      {"+", "PLUS_SYMBOL"},
 #line 12 "reserved_words.txt"
       {"program", "PROGRAM_RESERVED"},
+      {""}, {""}, {""},
+#line 42 "reserved_words.txt"
+      {"*", "MULTIPLICATION_SYMBOL"},
       {""}, {""}, {""}, {""},
-#line 31 "reserved_words.txt"
-      {"if", "IF_RESERVED"}
+#line 25 "reserved_words.txt"
+      {")", "RIGHT_PARENTHESIS"},
+      {""}, {""}, {""}, {""},
+#line 24 "reserved_words.txt"
+      {"(", "LEFT_PARENTHESIS"}
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      register unsigned int key = hash (str, len);
+      register int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE)
+      if (key <= MAX_HASH_VALUE && key >= 0)
         {
           register const char *s = wordlist[key].name;
 

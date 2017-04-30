@@ -2,12 +2,12 @@
 	typedef struct Word
 	{
 		char *word;
-		char *symbol;
+		char *token;
 	} WORD;
 %}
 %readonly-tables
 %struct-type
-WORD
+struct Word
 %%
 "program", "PROGRAM_RESERVED"
 ";", "SEMICOLON_SYMBOL"
@@ -26,6 +26,7 @@ WORD
 "else", "ELSE_RESERVED"
 "read", "READ_RESERVED"
 "write", "WRITE_RESERVED"
+"for", "FOR_RESERVED"
 "while", "WHILE_RESERVED"
 "do", "DO_RESERVED"
 "if", "IF_RESERVED"
