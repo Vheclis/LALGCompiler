@@ -28,8 +28,10 @@
 %token FOR_RESERVED
 %token WHILE_RESERVED
 %token DO_RESERVED
+%token TO_RESERVED
 %token IF_RESERVED
 %token THEN_RESERVED
+%token FOR_RESERVED
 %token ASSIGN_SYMBOL
 %token DIF_SYMBOL
 %token MAJOR_EQUAL_SYMBOL
@@ -43,51 +45,52 @@
 
 %%
 
-program: PROGRAM_RESERVED IDENTIFIER SEMICOLON_SYMBOL body DOT_SYMBOL ;
+program: PROGRAM_RESERVED IDENTIFIER SEMICOLON_SYMBOL body DOT_SYMBOL | error SEMICOLON_SYMBOL;
 
-body: dc BEGIN_RESERVED commands END_RESERVED;
+body: dc BEGIN_RESERVED commands END_RESERVED | error BEGIN_RESERVED | error END_RESERVED;
 
 dc: dc_c dc_v dc_p;
 
-dc_c: CONST_RESERVED IDENTIFIER EQUAL_SYMBOL number SEMICOLON_SYMBOL dc_c | %empty;
+dc_c: CONST_RESERVED IDENTIFIER EQUAL_SYMBOL number SEMICOLON_SYMBOL dc_c | %empty | error SEMICOLON_SYMBOL;
 
-dc_v: VAR_RESERVED variables COLON_SYMBOL var_type SEMICOLON_SYMBOL dc_v | %empty;
+dc_v: VAR_RESERVED variables COLON_SYMBOL var_type SEMICOLON_SYMBOL dc_v | %empty | error SEMICOLON_SYMBOL ;
 
 var_type: REAL_RESERVED | INTEGER_RESERVED;
 
-variables: IDENTIFIER more_var;
+variables: IDENTIFIER more_var | error more_var;
 
 more_var: COMMA_SYMBOL variables | %empty;
 
-dc_p: PROCEDURE_RESERVED IDENTIFIER parameters SEMICOLON_SYMBOL body_p dc_p | %empty;
+dc_p: PROCEDURE_RESERVED IDENTIFIER parameters SEMICOLON_SYMBOL body_p dc_p | %empty | error SEMICOLON_SYMBOL;
 
-parameters: LEFT_PARENTHESIS par_list RIGHT_PARENTHESIS | %empty;
+parameters: LEFT_PARENTHESIS par_list RIGHT_PARENTHESIS | %empty | error RIGHT_PARENTHESIS;
 
-par_list: variables COLON_SYMBOL var_type more_par;
+par_list: variables COLON_SYMBOL var_type more_par | error COLON_SYMBOL | error var_type;
 
 more_par: SEMICOLON_SYMBOL par_list | %empty;
 
-body_p: dc_loc BEGIN_RESERVED commands END_RESERVED;
+body_p: dc_loc BEGIN_RESERVED commands END_RESERVED | error END_RESERVED;
 
 dc_loc: dc_v;
 
-arg_list: LEFT_PARENTHESIS args RIGHT_PARENTHESIS | %empty;
+arg_list: LEFT_PARENTHESIS args RIGHT_PARENTHESIS | %empty | error RIGHT_PARENTHESIS;
 
-args: IDENTIFIER more_ident;
+args: IDENTIFIER more_ident | error more_ident;
 
 more_ident: SEMICOLON_SYMBOL args | %empty;
 
 falsep: ELSE_RESERVED cmd | %empty;
 
-commands: cmd SEMICOLON_SYMBOL commands | %empty;
+commands: cmd SEMICOLON_SYMBOL commands | %empty | error SEMICOLON_SYMBOL;
 
-cmd: READ_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS 	|
-	 WRITE_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS	|
-	 WHILE_RESERVED LEFT_PARENTHESIS (condition) DO_RESERVED cmd 	|
-	 IF_RESERVED condition THEN_RESERVED cmd falsep					|
-	 IDENTIFIER ASSIGN_SYMBOL expression 							|
-	 IDENTIFIER arg_list											|
-	 BEGIN_RESERVED commands END_RESERVED 							;
+cmd: READ_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS 					|       error RIGHT_PARENTHESIS			|
+	 WRITE_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS					|		error RIGHT_PARENTHESIS			|
+	 WHILE_RESERVED LEFT_PARENTHESIS condition RIGHT_PARENTHESIS DO_RESERVED cmd 	|		error RIGHT_PARENTHESIS			|
+	 IF_RESERVED condition THEN_RESERVED cmd falsep									|		error THEN_RESERVED				|
+	 IDENTIFIER ASSIGN_SYMBOL expression 											|		error ASSIGN_SYMBOL				|
+	 IDENTIFIER arg_list																									|
+	 FOR_RESERVED IDENTIFIER ASSIGN_SYMBOL expression TO_RESERVED expression DO_RESERVED cmd 	| error DO_RESERVED			|
+	 BEGIN_RESERVED commands END_RESERVED 											|		error END_RESERVED				;
 
 condition: expression relation expression;
 
@@ -107,7 +110,19 @@ more_factors: op_mul factor more_factors | %empty;
 
 op_mul: MULTIPLICATION_SYMBOL | DIVISION_SYMBOL;
 
-factor: IDENTIFIER | number | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS;
+factor: IDENTIFIER | number | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS | error RIGHT_PARENTHESIS;
 
 number: int_number | int_real;
 
+%%
+
+void yyerror(char *string)
+{
+	
+}
+
+int main(int argc, char *argv[])
+{
+	yyparse();
+	return 0;
+}

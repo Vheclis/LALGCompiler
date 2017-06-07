@@ -30,6 +30,7 @@ struct Word
 "for", "FOR_RESERVED"
 "while", "WHILE_RESERVED"
 "do", "DO_RESERVED"
+"to", "TO_RESERVED"
 "if", "IF_RESERVED"
 "then", "THEN_RESERVED"
 ":=", "ASSIGN_SYMBOL"

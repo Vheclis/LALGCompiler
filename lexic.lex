@@ -25,6 +25,9 @@
 		"REAL_NUMBER"
 	};
 
+	int col_count = 1;
+	int lin_count = 1;
+
 	void print_specific(char* str, char* token);
 	void print_symbol(char* str);
 	void print_lexical(char* str);
@@ -36,19 +39,19 @@
 %option noyywrap
 %% //Rules
 
-\{.*\}														{ /* Commentary LALG */ }
-[ \t\r]														{ /* Line Spacing */ }
-\n 																{ /* Line Break */ }
+\{.*\}							{ col_count =+ strlen(yytext); } /* Commentary LALG */ 
+[ \t\r]							{ col_count++; } /* Line Spacing */
+\n 								{ lin_count++; col_count = 0 } /* Line Break */
 
-[0-9]+														{ print_specific(yytext, special_names[INTEGER]); } /* Integer Number */
-[0-9]+\.[0-9]+										{ print_specific(yytext, special_names[REAL]); } /* Real Number */
+[0-9]+							{ col_count += strlen(yytext); print_specific(yytext, special_names[INTEGER]); } /* Integer Number */
+[0-9]+\.[0-9]+					{ col_count += strlen(yytext); print_specific(yytext, special_names[REAL]); } /* Real Number */
 
-[:=><]{2}													{ print_symbol(yytext); } /* Operators and Comparer */
-[+\-\*\/\(\)\[\]\.,;:=><]					{ print_symbol(yytext); } /* Operators and Comparer */
+[:=><]{2}						{ col_count += strlen(yytext); print_symbol(yytext); } /* Operators and Comparer */
+[+\-\*\/\(\)\[\]\.,;:=><]		{ col_count += strlen(yytext); print_symbol(yytext); } /* Operators and Comparer */
 
-[a-zA-Z][a-zA-Z0-9_]*							{ print_lexical(yytext); } /* Identifiers and Reserved Words */
+[a-zA-Z][a-zA-Z0-9_]*			{ col_count += strlen(yytext); print_lexical(yytext); } /* Identifiers and Reserved Words */
 
-.																	{ error(yytext); } /* Error */
+.								{ error(yytext); } /* Error */
 
 %%
 
