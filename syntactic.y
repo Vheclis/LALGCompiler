@@ -1,10 +1,14 @@
 %code{
 	#include <stdio.h>
 	#include <stdlib.h>
+	extern int yylex();
+	extern void yyerror(char *s);
+	extern int line;
+	extern int column;
 }
 
-%token INTEGER 
-%token REAL 
+%token INTEGER
+%token REAL
 %token IDENTIFIER
 
 %token PROGRAM_RESERVED
@@ -34,8 +38,8 @@
 %token DIF_SYMBOL
 %token MAJOR_EQUAL_SYMBOL
 %token MINOR_EQUAL_SYMBOL
-%token MAJOR_SYMBOL 
-%token MINOR_SYMBOL 
+%token MAJOR_SYMBOL
+%token MINOR_SYMBOL
 %token PLUS_SYMBOL
 %token MINUS_SYMBOL
 %token MULTIPLICATION_SYMBOL
@@ -110,4 +114,3 @@ op_mul: MULTIPLICATION_SYMBOL | DIVISION_SYMBOL;
 factor: IDENTIFIER | number | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS;
 
 number: int_number | int_real;
-
