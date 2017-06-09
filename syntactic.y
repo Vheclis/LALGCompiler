@@ -45,11 +45,11 @@
 
 %%
 
-program:	PROGRAM_RESERVED IDENTIFIER SEMICOLON_SYMBOL body DOT_SYMBOL 	| 
+program:	PROGRAM_RESERVED IDENTIFIER SEMICOLON_SYMBOL body DOT_SYMBOL  { printf("Matched program\n"); }	| 
 			error SEMICOLON_SYMBOL 											| 
 		 	error DOT_SYMBOL												; //
 
-body: 	dc BEGIN_RESERVED commands END_RESERVED 	| 
+body: 	dc BEGIN_RESERVED commands END_RESERVED 	{ printf("Matched body\n"); } | 
 	  	error READ_RESERVED							| //comeco do first de cmd
 	  	error WRITE_RESERVED						|
 	  	error WHILE_RESERVED						|
@@ -59,12 +59,12 @@ body: 	dc BEGIN_RESERVED commands END_RESERVED 	|
 	  	error BEGIN_RESERVED						| //fim do first de cmd
 	  	error DOT_SYMBOL 							; 
 
-dc:	dc_c dc_v dc_p 			| 
+dc:	dc_c dc_v dc_p 			{ printf("Matched dc\n"); }| 
 	error CONST_RESERVED 	| 
 	error PROCEDURE_RESERVED; //
 
-dc_c: 	CONST_RESERVED IDENTIFIER EQUAL_SYMBOL number SEMICOLON_SYMBOL dc_c | 
-	  	%empty 					| 
+dc_c: 	%empty 																								|
+		CONST_RESERVED IDENTIFIER EQUAL_SYMBOL number SEMICOLON_SYMBOL dc_c { printf("Matched dc_c\n"); }	|  
 	  	error IDENTIFIER	 	|
 	  	error EQUAL_SYMBOL 		|
 	  	error INTEGER 			|
@@ -73,51 +73,51 @@ dc_c: 	CONST_RESERVED IDENTIFIER EQUAL_SYMBOL number SEMICOLON_SYMBOL dc_c |
 	  	error SEMICOLON_SYMBOL 	|
 	  	error VAR_RESERVED		; //
 
-dc_v: 	VAR_RESERVED variables COLON_SYMBOL var_type SEMICOLON_SYMBOL dc_v | 
-	  	%empty 						| 
+dc_v: 	%empty 																								| 
+		VAR_RESERVED variables COLON_SYMBOL var_type SEMICOLON_SYMBOL dc_v 	{ printf("Matched dc_v\n"); } 	| 
 	  	error IDENTIFIER			|
 	  	error SEMICOLON_SYMBOL 		|
 	  	error REAL_RESERVED			|
 	  	error VAR_RESERVED			|
 	  	error PROCEDURE_RESERVED	; //
 
-var_type: 	REAL_RESERVED			| 
-		  	INTEGER_RESERVED 		|
+var_type: 	REAL_RESERVED			{ printf("Matched real reserved\n"); }		| 
+		  	INTEGER_RESERVED 		{ printf("Matched integer reserved\n"); }	|
 		  	error SEMICOLON_SYMBOL 	|
 		  	error RIGHT_PARENTHESIS	; //
 
-variables: 	IDENTIFIER more_var 	| 
+variables: 	IDENTIFIER more_var 	{ printf("Matched variables\n"); }	| 
 		   	error COLON_SYMBOL 		| 
 		   	error RIGHT_PARENTHESIS	|
 		   	error COMMA_SYMBOL		; //
 
-more_var: 	COMMA_SYMBOL variables 	| 
-		  	%empty					| 
+more_var: 	%empty															| 
+			COMMA_SYMBOL variables 	{ printf("Matched more variables\n"); }	|
 		  	error IDENTIFIER		; //
 
-dc_p: 	PROCEDURE_RESERVED IDENTIFIER parameters SEMICOLON_SYMBOL body_p dc_p | 
-	  	%empty 				 	| 
+dc_p: 	%empty 				 																					|
+		PROCEDURE_RESERVED IDENTIFIER parameters SEMICOLON_SYMBOL body_p dc_p  { printf("Matched dc_p\n"); }	| 
 	  	error SEMICOLON_SYMBOL 	|
 	  	error IDENTIFIER 		|
 	  	error VAR_RESERVED 		|
 	  	error LEFT_PARENTHESIS 	|
 	  	error BEGIN_RESERVED	; //
 
-parameters: LEFT_PARENTHESIS par_list RIGHT_PARENTHESIS | 
-			%empty 					| 
+parameters: %empty 																			| 
+			LEFT_PARENTHESIS par_list RIGHT_PARENTHESIS { printf("Matched parameters\n"); }	| 
 			error IDENTIFIER 		|
 			error SEMICOLON_SYMBOL 	|
 			error RIGHT_PARENTHESIS	; //
 
-par_list: 	variables COLON_SYMBOL var_type more_par | 
+par_list: 	variables COLON_SYMBOL var_type more_par { printf("Matched a parameters list\n"); }	| 
 		  	error REAL_RESERVED 	| 
 		  	error INTEGER_RESERVED	; //
 
-more_par: 	SEMICOLON_SYMBOL par_list | 
-		  	%empty 			| 
+more_par: 	%empty 																	|
+			SEMICOLON_SYMBOL par_list 	{ printf("Matched  moew parameters\n"); }	|
 		  	error IDENTIFIER; //
 
-body_p: dc_loc BEGIN_RESERVED commands END_RESERVED | 
+body_p: dc_loc BEGIN_RESERVED commands END_RESERVED { printf("Matched body_p\n"); } |
 		error END_RESERVED 		|
 		error READ_RESERVED		| //comeco do first de cmd
 	  	error WRITE_RESERVED	|
@@ -128,25 +128,25 @@ body_p: dc_loc BEGIN_RESERVED commands END_RESERVED |
 	  	error BEGIN_RESERVED	| //fim do first de cmd
 		error PROCEDURE_RESERVED; 
 
-dc_loc: dc_v; //
+dc_loc: dc_v { printf("Matched dc_loc\n"); }; //
 
-arg_list: 	LEFT_PARENTHESIS args RIGHT_PARENTHESIS | 
-		  	%empty 					| 
+arg_list: 	%empty 																				|
+			LEFT_PARENTHESIS args RIGHT_PARENTHESIS { printf("Matched a arguments list\n"); }	|
 		  	error IDENTIFIER 		|
 		  	error RIGHT_PARENTHESIS | 
 		  	error SEMICOLON_SYMBOL 	|
 		  	error ELSE_RESERVED		; //
 
-args: 	IDENTIFIER more_ident 	| 
+args: 	IDENTIFIER more_ident 	{ printf("Matched arguments\n"); }	|
 	  	error SEMICOLON_SYMBOL	|
 	  	error RIGHT_PARENTHESIS	; //
 
-more_ident: SEMICOLON_SYMBOL args | 
-			%empty 			| 
+more_ident: %empty 																| 
+			SEMICOLON_SYMBOL args 	{ printf("Matched more identifiers\n"); }	|
 			error IDENTIFIER; //
 
-falsep: ELSE_RESERVED cmd 		| 
-		%empty 					| 
+falsep: %empty 															| 
+		ELSE_RESERVED cmd 		{ printf("Matched else reserved\n"); }	|
 		error READ_RESERVED		| //comeco do first de cmd
 	 	error WRITE_RESERVED	|
 	  	error WHILE_RESERVED	|
@@ -156,8 +156,8 @@ falsep: ELSE_RESERVED cmd 		|
 	  	error BEGIN_RESERVED	| //fim do first de cmd
 		error SEMICOLON_SYMBOL	;
 
-commands: 	cmd SEMICOLON_SYMBOL commands | 
-			%empty 						| 
+commands: 	%empty 																| 
+			cmd SEMICOLON_SYMBOL commands 	{ printf("Matched commands\n"); }	| 
 			error SEMICOLON_SYMBOL 		| 
 			error READ_RESERVED			| //comeco do first de cmd
 	  		error WRITE_RESERVED		|
@@ -168,14 +168,14 @@ commands: 	cmd SEMICOLON_SYMBOL commands |
 	  		error BEGIN_RESERVED		| //fim do first de cmd
 			error ELSE_RESERVED			;
 
-cmd:	READ_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS 								|
-		WRITE_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS								|
-		WHILE_RESERVED LEFT_PARENTHESIS condition RIGHT_PARENTHESIS DO_RESERVED cmd 			|
-		IF_RESERVED condition THEN_RESERVED cmd falsep											|
-		IDENTIFIER ASSIGN_SYMBOL expression 													|
-		IDENTIFIER arg_list														    			|
-		FOR_RESERVED IDENTIFIER ASSIGN_SYMBOL expression TO_RESERVED expression DO_RESERVED cmd | 
-		BEGIN_RESERVED commands END_RESERVED 													| 
+cmd:	READ_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS 								{ printf("Matched read\n"); }		|
+		WRITE_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS								{ printf("Matched write\n"); }		|
+		WHILE_RESERVED LEFT_PARENTHESIS condition RIGHT_PARENTHESIS DO_RESERVED cmd 			{ printf("Matched while\n"); }		|
+		IF_RESERVED condition THEN_RESERVED cmd falsep											{ printf("Matched if\n"); }			|
+		IDENTIFIER ASSIGN_SYMBOL expression 													{ printf("Matched assignment\n"); }	|
+		IDENTIFIER arg_list														    			{ printf("Matched function\n"); }	|
+		FOR_RESERVED IDENTIFIER ASSIGN_SYMBOL expression TO_RESERVED expression DO_RESERVED cmd { printf("Matched for\n"); }		| 
+		BEGIN_RESERVED commands END_RESERVED 													{ printf("Matched scope\n"); }		| 
 		error LEFT_PARENTHESIS  |
 		error DO_RESERVED		|
 		error IDENTIFIER 		|
@@ -192,32 +192,33 @@ cmd:	READ_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS 								|
 		error DO_RESERVED  	 	|
 		error ASSIGN_SYMBOL 	;
 
-condition: 	expression relation expression;
+condition: 	expression relation expression { printf("Matched condition\n"); }	;
 
-relation: 	EQUAL_SYMBOL 		| 
-			DIF_SYMBOL 			| 
-			MAJOR_EQUAL_SYMBOL 	| 
-			MINOR_EQUAL_SYMBOL 	| 
-			MINOR_SYMBOL 		| 
-			MAJOR_SYMBOL 		|
+relation: 	EQUAL_SYMBOL 		{ printf("Matched equal symbol\n"); }		| 
+			DIF_SYMBOL 			{ printf("Matched dif symbol\n"); }			| 
+			MAJOR_EQUAL_SYMBOL 	{ printf("Matched major equal sybol\n"); }	| 
+			MINOR_EQUAL_SYMBOL 	{ printf("Matched minor equal symbol\n"); }	| 
+			MINOR_SYMBOL 		{ printf("Matched minor symbol\n"); }		| 
+			MAJOR_SYMBOL 		{ printf("Matched major symbol\n"); } 		|
 			error PLUS_SYMBOL	|
 			error MINUS_SYMBOL	;
 
-expression: term other_terms;
+expression: term other_terms { printf("Matched expression\n"); }	;
 
-op_un: 	PLUS_SYMBOL 			| 
-		MINUS_SYMBOL 			| 
-		%empty					|
+op_un: 	%empty															|
+		PLUS_SYMBOL 			{ printf("Matched plus symbol\n"); }	| 
+		MINUS_SYMBOL 			{ printf("Matched minus symbol\n"); }	| 
 		error IDENTIFIER		|
 		error INTEGER   		|
 		error REAL 				|
 		error LEFT_PARENTHESIS	;
 
-other_terms: 	op_ad term other_terms | 
-				%empty;
+other_terms: 	%empty				   										|
+				op_ad term other_terms { printf("Matched other terms\n"); }	; 
+				
 
-op_ad: 	PLUS_SYMBOL 			| 
-		MINUS_SYMBOL			|
+op_ad: 	PLUS_SYMBOL 			{ printf("Matched plus symbol\n"); }	| 
+		MINUS_SYMBOL 			{ printf("Matched minus symbol\n"); }	| 
 		error PLUS_SYMBOL		|
 		error MINUS_SYMBOL		|
 		error IDENTIFIER		|
@@ -225,29 +226,30 @@ op_ad: 	PLUS_SYMBOL 			|
 		error REAL 				|
 		error LEFT_PARENTHESIS	;
 
-term: 	op_un factor more_factors;
+term: 	op_un factor more_factors { printf("Matched a term\n"); }	;
 
-more_factors: 	op_mul factor more_factors | 
-				%empty;
+more_factors: 	%empty																|
+				op_mul factor more_factors 	{ printf("Matched more factors\n"); }	; 
+				
 
-op_mul: MULTIPLICATION_SYMBOL | 
-		DIVISION_SYMBOL			|
+op_mul: MULTIPLICATION_SYMBOL 	{ printf("Matched multiplication symbol\n"); }	| 
+		DIVISION_SYMBOL			{ printf("Matched division symbol\n"); }		|
 		error IDENTIFIER		|
 		error INTEGER   		|
 		error REAL 				|
 		error LEFT_PARENTHESIS	;
 
-factor: IDENTIFIER 										| 
-		number 											| 
-		LEFT_PARENTHESIS expression RIGHT_PARENTHESIS 	| 
+factor: IDENTIFIER 										{ printf("Matched factor\n"); }	| 
+		number 											{ printf("Matched factor\n"); }	|
+		LEFT_PARENTHESIS expression RIGHT_PARENTHESIS 	{ printf("Matched factor\n"); }	| 
 		error RIGHT_PARENTHESIS							|
 		error MULTIPLICATION_SYMBOL 					|
 		error DIVISION_SYMBOL							|
 		error PLUS_SYMBOL 								|
 		error MINUS_SYMBOL								;
 
-number: INTEGER 					| 
-		REAL 						|
+number: INTEGER 					{ printf("Matched a integer number\n"); }	| 
+		REAL 						{ printf("Matched a real number\n"); }		|
 		error SEMICOLON_SYMBOL		|
 		error MULTIPLICATION_SYMBOL |
 		error DIVISION_SYMBOL		;
@@ -256,7 +258,8 @@ number: INTEGER 					|
 
 void yyerror(char *string)
 {
-	
+	//precisa pegar column e line
+	fprintf(stderr, "%s is close to  %s. Column %d; line %d", string, yytext, column, line);
 }
 
 int main(int argc, char *argv[])
