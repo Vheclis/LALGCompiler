@@ -48,11 +48,11 @@
 [0-9]+\.[0-9]+				{ INC_COL return specific(yytext, REAL); } /* Real Number */
 [0-9]+						{ INC_COL return specific(yytext, INTEGER); } /* Integer Number */
 
-':='							{ printf("ASD!"); INC_COL return "ASSIGN_SYMBOL"; } /* Assign */
-'<>'							{ printf("ASD!"); INC_COL return "DIF_SYMBOL"; } /* Comparer */
-'>='							{ printf("ASD!"); INC_COL return "MAJOR_EQUAL_SYMBOL"; } /* Comparer */
-'<='							{ printf("ASD!"); INC_COL return "MINOR_EQUAL_SYMBOL"; } /* Comparer */
-[+\-\*\/\(\)\[\]\.,;:=><]	{ INC_COL return symbol(yytext); } /* Operators and Comparer */
+':='							{ INC_COL return "ASSIGN_SYMBOL"; } /* Assign */
+'<>'							{ INC_COL return "DIF_SYMBOL"; } /* Comparer */
+'>='							{ INC_COL return "MAJOR_EQUAL_SYMBOL"; } /* Comparer */
+'<='							{ INC_COL return "MINOR_EQUAL_SYMBOL"; } /* Comparer */
+[+\-\*\/\(\)\[\]\.,;:=><]		{ INC_COL return symbol(yytext); } /* Operators and Comparer */
 
 [a-zA-Z][a-zA-Z0-9_]*		{ INC_COL return lexical(yytext); } /* Identifiers and Reserved Words */
 

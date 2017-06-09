@@ -6,6 +6,11 @@
 	extern int line;
 	extern int column;
 }
+%union {
+	int intval;
+	float realval;
+	char* strval;
+}
 
 %token INTEGER
 %token REAL
