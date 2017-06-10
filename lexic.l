@@ -99,7 +99,7 @@ int lexical(char* str)
 /* Error */
 int lex_error(char *str)
 {
-	printf("Lexical error! Word: %s at line: %d, column: %d\n", str, line, column);
+	printf("\nLexical error! Word: %s at line: %d, column: %d\n", str, line, column);
 	return -1;
 }
 
