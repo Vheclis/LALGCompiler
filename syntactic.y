@@ -50,6 +50,9 @@
 %token MULTIPLICATION_SYMBOL
 %token DIVISION_SYMBOL
 
+%precedence NO_ELSE
+%precedence ELSE_RESERVED;
+
 %%
 
 program: PROGRAM_RESERVED IDENTIFIER SEMICOLON_SYMBOL body DOT_SYMBOL ;
@@ -86,7 +89,8 @@ args: IDENTIFIER more_ident;
 
 more_ident: SEMICOLON_SYMBOL args | %empty;
 
-falsep: ELSE_RESERVED cmd | %empty;
+falsep: %empty %prec NO_ELSE 	| 
+		ELSE_RESERVED cmd 	;
 
 commands: cmd SEMICOLON_SYMBOL commands | %empty;
 
