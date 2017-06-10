@@ -1,40 +1,41 @@
 %{
-	typedef struct Word
-	{
-		char *name;
-		char *token;
-	} WORD;
+#include "syntactic.yy.h"
+typedef struct Word
+{
+	char *name;
+	int token;
+} WORD;
 %}
 %readonly-tables
 %struct-type
 struct Word
 %%
-"program", "PROGRAM_RESERVED"
-";", "SEMICOLON_SYMBOL"
-"begin", "BEGIN_RESERVED"
-"end", "END_RESERVED"
-"const", "CONST_RESERVED"
-"=", "EQUAL_SYMBOL"
-"var", "VAR_RESERVED"
-":", "COLON_SYMBOL"
-".", "DOT_SYMBOL"
-"real", "REAL_RESERVED"
-"integer", "INTEGER_RESERVED"
-",", "COMMA_SYMBOL"
-"procedure", "PROCEDURE_RESERVED"
-"(", "LEFT_PARENTHESIS"
-")", "RIGHT_PARENTHESIS"
-"else", "ELSE_RESERVED"
-"read", "READ_RESERVED"
-"write", "WRITE_RESERVED"
-"for", "FOR_RESERVED"
-"while", "WHILE_RESERVED"
-"do", "DO_RESERVED"
-"if", "IF_RESERVED"
-"then", "THEN_RESERVED"
-">", "MAJOR_SYMBOL"
-"<", "MINOR_SYMBOL"
-"+", "PLUS_SYMBOL"
-"-", "MINUS_SYMBOL"
-"*", "MULTIPLICATION_SYMBOL"
-"/", "DIVISION_SYMBOL"
+"program", PROGRAM_RESERVED
+";", SEMICOLON_SYMBOL
+"begin", BEGIN_RESERVED
+"end", END_RESERVED
+"const", CONST_RESERVED
+"=", EQUAL_SYMBOL
+"var", VAR_RESERVED
+":", COLON_SYMBOL
+".", DOT_SYMBOL
+"real", REAL_RESERVED
+"integer", INTEGER_RESERVED
+",", COMMA_SYMBOL
+"procedure", PROCEDURE_RESERVED
+"(", LEFT_PARENTHESIS
+")", RIGHT_PARENTHESIS
+"else", ELSE_RESERVED
+"read", READ_RESERVED
+"write", WRITE_RESERVED
+"for", FOR_RESERVED
+"while", WHILE_RESERVED
+"do", DO_RESERVED
+"if", IF_RESERVED
+"then", THEN_RESERVED
+">", MAJOR_SYMBOL
+"<", MINOR_SYMBOL
+"+", PLUS_SYMBOL
+"-", MINUS_SYMBOL
+"*", MULTIPLICATION_SYMBOL
+"/", DIVISION_SYMBOL

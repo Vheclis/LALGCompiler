@@ -1,20 +1,16 @@
-%code{
+%{
 	#include <stdio.h>
 	#include <stdlib.h>
 	extern int yylex();
-	extern void yyerror(char *s);
+	extern void yyerror(const char *s);
 	extern int line;
 	extern int column;
-}
+%}
 %union {
 	int intval;
 	float realval;
 	char* strval;
 }
-
-%token INTEGER
-%token REAL
-%token IDENTIFIER
 
 %token PROGRAM_RESERVED
 %token SEMICOLON_SYMBOL
@@ -39,16 +35,21 @@
 %token DO_RESERVED
 %token IF_RESERVED
 %token THEN_RESERVED
-%token ASSIGN_SYMBOL
-%token DIF_SYMBOL
-%token MAJOR_EQUAL_SYMBOL
-%token MINOR_EQUAL_SYMBOL
 %token MAJOR_SYMBOL
 %token MINOR_SYMBOL
 %token PLUS_SYMBOL
 %token MINUS_SYMBOL
 %token MULTIPLICATION_SYMBOL
 %token DIVISION_SYMBOL
+
+%token ASSIGN_SYMBOL
+%token DIF_SYMBOL
+%token MAJOR_EQUAL_SYMBOL
+%token MINOR_EQUAL_SYMBOL
+
+%token INTEGER
+%token REAL
+%token IDENTIFIER
 
 %%
 
@@ -92,7 +93,7 @@ commands: cmd SEMICOLON_SYMBOL commands | %empty;
 
 cmd: READ_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS 	|
 	 WRITE_RESERVED LEFT_PARENTHESIS variables RIGHT_PARENTHESIS	|
-	 WHILE_RESERVED LEFT_PARENTHESIS (condition) DO_RESERVED cmd 	|
+	 WHILE_RESERVED LEFT_PARENTHESIS LEFT_PARENTHESIS condition RIGHT_PARENTHESIS DO_RESERVED cmd 	|
 	 IF_RESERVED condition THEN_RESERVED cmd falsep					|
 	 IDENTIFIER ASSIGN_SYMBOL expression 							|
 	 IDENTIFIER arg_list											|
@@ -118,4 +119,16 @@ op_mul: MULTIPLICATION_SYMBOL | DIVISION_SYMBOL;
 
 factor: IDENTIFIER | number | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS;
 
-number: int_number | int_real;
+number: INTEGER | REAL;
+
+%%
+
+int main(int argc, char* argv[]) {
+	yyparse();
+	return 0;
+}
+
+void yyerror(const char *str) {
+	printf("Syntax error!  Message: %s", str);
+	exit(-1);
+}
